@@ -1,5 +1,13 @@
 {
     "name": "ss-lambda",
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "format": "prettier . --write",
+        "test": "vitest",
+        "release": "pnpm dlx semantic-release"
+    },
     "repository": {
         "url": "https://github.com/thelinguist/ss-lambda"
     },
@@ -17,14 +25,6 @@
     },
     "types": "./dist/index.d.ts",
     "license": "MIT",
-    "version": "1.0.0",
-    "scripts": {
-        "dev": "vite",
-        "build": "tsc && vite build",
-        "format": "prettier . --write",
-        "test": "vitest",
-        "release": "pnpm dlx semantic-release"
-    },
     "release": {
         "plugins": [
             "@semantic-release/commit-analyzer",
@@ -50,7 +50,11 @@
         ],
         "branches": [
             "master",
-            "main"
+            "main",
+            {
+                "name": "beta",
+                "prerelease": true
+            }
         ]
     },
     "devDependencies": {

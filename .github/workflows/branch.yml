@@ -1,99 +1,99 @@
 name: Feature Branch
 
 on:
-  push:
-    branches:
-      - '*'
+    push:
+        branches:
+            - "*"
 permissions:
-  contents: read # for checkout
+    contents: read # for checkout
 jobs:
-  test-lib:
-    runs-on: ubuntu-latest
+    test-lib:
+        runs-on: ubuntu-latest
 
-    env:
-      CI: true
-
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 8
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - run: pnpm i
-        name: Install lib
-      - run: pnpm run test
-        name: Test lib
-      - run: pnpm run format
-        name: format checks
-  build-lib:
-    runs-on: ubuntu-latest
-    needs: test-lib
-
-    env:
-      CI: true
-
-    timeout-minutes: 10
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 8
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm i
-        name: Install lib
-      - run: pnpm run build
-        name: Build
-  release:
-    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
-    needs: build-lib
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: pnpm/action-setup@v4
-        name: Install pnpm
-        with:
-          version: 8
-          run_install: false
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-
-      - name: Install dependencies
-        run: pnpm install
-#      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-#        run: pnpm audit signatures
-      - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: pnpm run release
+            CI: true
+
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 8
+                  run_install: false
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - run: pnpm i
+              name: Install lib
+            - run: pnpm run test
+              name: Test lib
+            - run: pnpm run format
+              name: format checks
+    build-lib:
+        runs-on: ubuntu-latest
+        needs: test-lib
+
+        env:
+            CI: true
+
+        timeout-minutes: 10
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 8
+                  run_install: false
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+            - run: pnpm i
+              name: Install lib
+            - run: pnpm run build
+              name: Build
+    release:
+        if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
+        needs: build-lib
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write # to be able to publish a GitHub release
+            issues: write # to be able to comment on released issues
+            pull-requests: write # to be able to comment on released pull requests
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - uses: pnpm/action-setup@v4
+              name: Install pnpm
+              with:
+                  version: 8
+                  run_install: false
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 20
+                  cache: "pnpm"
+
+            - name: Install dependencies
+              run: pnpm install
+            #      - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
+            #        run: pnpm audit signatures
+            - name: Release
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: pnpm run release
