@@ -3,7 +3,6 @@ import { LambdaEventOverride, WrapperValidator } from "../types/LambdaWrapper"
 import { jsonBody } from "../middleware/jsonBody"
 import { formatError } from "./formatError"
 import { APIGatewayProxyEvent } from "aws-lambda"
-import { APIGatewayProxyStructuredResultV2 } from "aws-lambda/trigger/api-gateway-proxy"
 import { logger } from "../logger"
 import { ApiError } from "../ApiError"
 import { ManagedLambda } from "../types/ManagedLambda"
@@ -20,7 +19,7 @@ export const managedLambda: ManagedLambda = (handler, opts) => async (event, con
         const res = await handler(event, context, callback)
 
         if (responsePassThru) {
-            return res as APIGatewayProxyStructuredResultV2
+            return res
         } else {
             return lambdaResponse(res, 200)
         }
