@@ -9,12 +9,9 @@
         "release": "pnpm dlx semantic-release"
     },
     "repository": {
-        "url": "https://github.com/thelinguist/ss-lambda"
+        "url": "git+https://github.com/thelinguist/ss-lambda.git"
     },
     "type": "module",
-    "files": [
-        "dist"
-    ],
     "main": "./dist/ss-lambda.umd.cjs",
     "module": "./dist/ss-lambda.js",
     "exports": {
@@ -41,6 +38,7 @@
                 "@semantic-release/git",
                 {
                     "assets": [
+                        "dist/**/*.{ts,js}",
                         "package.json",
                         "CHANGELOG.md"
                     ]
