@@ -6,6 +6,12 @@
             "@semantic-release/github",
             "@semantic-release/changelog",
             [
+                "@semantic-release/git",
+                {
+                    "assets": ["dist/**/*.{ts,js}", "package.json", "CHANGELOG.md", "README.md"]
+                }
+            ],
+            [
                 "@semantic-release/npm",
                 {
                     "pkgRoot": "dist"
