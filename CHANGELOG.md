@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/thelinguist/ss-lambda/compare/v1.1.1...v1.1.2) (2024-07-31)
+
+
+### Bug Fixes
+
+* pipeline outputs dist ([4e7c95f](https://github.com/thelinguist/ss-lambda/commit/4e7c95fd358ffa40354735211ec479146aa0d6fd))
+* save dist ([8b2cc12](https://github.com/thelinguist/ss-lambda/commit/8b2cc12392ac2275a526a87e3ff5c689635aa325))
+
 ## [1.1.1](https://github.com/thelinguist/ss-lambda/compare/v1.1.0...v1.1.1) (2024-07-31)
 
 
