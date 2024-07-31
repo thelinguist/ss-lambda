@@ -1,7 +1,7 @@
 {
     "name": "ss-lambda",
     "author": "Bryce Shelley",
-    "version": "1.1.1",
+    "version": "1.1.4",
     "scripts": {
         "dev": "vite",
         "build": "tsc && vite build",
@@ -13,6 +13,7 @@
     "repository": {
         "url": "git+https://github.com/thelinguist/ss-lambda.git"
     },
+    "keywords": ["lambda", "typescript", "aws"],
     "type": "module",
     "main": "./dist/ss-lambda.umd.cjs",
     "module": "./dist/ss-lambda.js",
