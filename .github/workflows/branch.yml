@@ -33,7 +33,7 @@ jobs:
 
             - run: pnpm i
               name: Install lib
-            - run: pnpm run test
+            - run: pnpm run test:ci
               name: Test lib
             - run: pnpm run format
               name: format checks
@@ -64,6 +64,11 @@ jobs:
               name: Install lib
             - run: pnpm run build
               name: Build
+            - uses: actions/upload-artifact
+              with:
+                name: build
+                path: dist/
+                retention-days: 30
     release:
         if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/main'
         needs: build-lib
@@ -75,7 +80,10 @@ jobs:
         steps:
             - name: Checkout
               uses: actions/checkout@v4
-
+            - uses: actions/download-artifact@master
+              with:
+                name: build
+                path: dist/
             - uses: pnpm/action-setup@v4
               name: Install pnpm
               with:
