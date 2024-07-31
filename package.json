@@ -8,8 +8,7 @@
         "format": "prettier . --write",
         "test": "vitest",
         "test:ci": "vitest run --coverage.enabled --coverage.reporter='text-summary'",
-        "release": "pnpm dlx semantic-release",
-        "postversion": "cp -r package.json dist/"
+        "release": "pnpm dlx semantic-release"
     },
     "repository": {
         "url": "git+https://github.com/thelinguist/ss-lambda.git"
@@ -25,39 +24,12 @@
     },
     "types": "./dist/index.d.ts",
     "license": "MIT",
-    "release": {
-        "plugins": [
-            "@semantic-release/commit-analyzer",
-            "@semantic-release/release-notes-generator",
-            "@semantic-release/github",
-            "@semantic-release/changelog",
-            [
-                "@semantic-release/git",
-                {
-                    "assets": [
-                        "dist/**/*.{ts,js}",
-                        "package.json",
-                        "CHANGELOG.md",
-                        "README.md"
-                    ]
-                }
-            ],
-            [
-                "@semantic-release/npm",
-                {
-                    "pkgRoot": "dist"
-                }
-            ]
-        ],
-        "branches": [
-            "master",
-            "main",
-            {
-                "name": "beta",
-                "prerelease": true
-            }
-        ]
+    "publishConfig": {
+        "access": "public"
     },
+    "files": [
+        "./dist/**"
+    ],
     "devDependencies": {
         "@semantic-release/changelog": "^6.0.3",
         "@semantic-release/git": "^10.0.1",
