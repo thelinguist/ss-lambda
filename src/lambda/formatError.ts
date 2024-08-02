@@ -6,9 +6,7 @@ export function formatError(error: ApiError) {
     }
 
     for (const key in error.reporting) {
-        if (key) {
-            message[key] = error[key]
-        }
+        message[key] = error.reporting[key]
     }
 
     return message

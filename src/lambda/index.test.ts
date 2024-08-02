@@ -176,4 +176,19 @@ describe("managedLambda", () => {
         const res = await handler({ body: JSON.stringify({ test: "working" }) })
         expect(res.statusCode).toBe(413)
     })
+
+    it("sends api error reporting codes", async () => {
+        vi.spyOn(logger, "error").mockImplementationOnce(() => {})
+        const handler = managedLambda(() => {
+            throw new ApiError("idk something bad", 413, { teapotSize: "large" })
+        })
+        // @ts-ignore
+        const res = await handler({})
+        expect(res.statusCode).toBe(413)
+        const body = JSON.parse(res.body!)
+        expect(body).toEqual({
+            Error: "idk something bad",
+            teapotSize: "large",
+        })
+    })
 })

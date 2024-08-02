@@ -13,7 +13,7 @@ A super-simple lambda wrapper to make Lambda easy to work with in API gateways (
 # Usage
 
 ```ts
-import ssLambda from 'ss-lambda'
+import ssLambda from "ss-lambda"
 
 interface ExampleReqBody {
     id: string
@@ -36,6 +36,7 @@ export const post = ssLambda<ExampleReqBody, ExampleQueryStringParams>(
 ```
 
 # Validators
+
 ```ts
 import { ApiError, WrapperValidator } from "ss-lambda"
 
@@ -45,9 +46,10 @@ const headersChecker: WrapperValidator = event => {
         throw new ApiError("invalid request", 400)
     }
 }
-
 ```
+
 then add the function to the `opts` in ssLambda, ex:
+
 ```ts
 export const post = ssLambda<ExampleReqBody, ExampleQueryStringParams>(
     async event => {

@@ -1,52 +1,49 @@
-var h = Object.defineProperty;
-var p = (s, t, o) => t in s ? h(s, t, { enumerable: !0, configurable: !0, writable: !0, value: o }) : s[t] = o;
-var i = (s, t, o) => p(s, typeof t != "symbol" ? t + "" : t, o);
+var p = Object.defineProperty;
+var h = (s, o, r) => o in s ? p(s, o, { enumerable: !0, configurable: !0, writable: !0, value: r }) : s[o] = r;
+var a = (s, o, r) => h(s, typeof o != "symbol" ? o + "" : o, r);
 let u = {};
-const m = () => u, w = (s) => u = s, f = (s, t = 200, o = {}, e) => {
-  var r;
+const m = () => u, w = (s) => u = s, d = (s, o = 200, r = {}, e) => {
+  var t;
   return {
-    statusCode: t,
+    statusCode: o,
     isBase64Encoded: !1,
     headers: {
-      "Access-Control-Allow-Origin": ((r = m()) == null ? void 0 : r.domain) || "*",
+      "Access-Control-Allow-Origin": ((t = m()) == null ? void 0 : t.domain) || "*",
       "Access-Control-Allow-Credentials": !0,
       "Content-Type": "application/json",
-      ...o
+      ...r
     },
     body: s ? JSON.stringify(s) : void 0
   };
 };
-class c extends Error {
+class i extends Error {
   /**
    * @param message
    * @param statusCode if left out then lambda will return 500 with generic error and log actual error
    * @param reporting
    */
-  constructor(o, e, r) {
-    super(o);
-    i(this, "statusCode");
-    i(this, "reporting");
-    if (this.statusCode = e, r)
-      for (const a in r)
-        this[a] = r[a];
-    Object.setPrototypeOf(this, c.prototype);
+  constructor(r, e, t) {
+    super(r);
+    a(this, "statusCode");
+    a(this, "reporting");
+    this.name = "ApiError", this.statusCode = e, this.reporting = t, Object.setPrototypeOf(this, i.prototype);
   }
 }
-const C = (s, t) => {
-  if (!t)
+const C = (s, o) => {
+  if (!o)
     try {
       return s.body ? JSON.parse(s.body) : s.body;
     } catch {
-      throw new c("bad request", 400);
+      throw new i("bad request", 400);
     }
 };
 function b(s) {
-  const t = {
+  const o = {
     Error: s.message
   };
-  for (const o in s.reporting)
-    o && (t[o] = s[o]);
-  return t;
+  for (const r in s.reporting)
+    o[r] = s.reporting[r];
+  return o;
 }
 const A = {
   // eslint-disable-next-line no-console
@@ -55,28 +52,28 @@ const A = {
   info: console.log,
   // eslint-disable-next-line no-console
   warn: console.warn
-}, l = (s, t) => async (o, e, r) => {
-  const { responsePassThru: a, bodyPassThru: d, validators: g } = t ?? {};
+}, f = (s, o) => async (r, e, t) => {
+  const { responsePassThru: y, bodyPassThru: c, validators: g } = o ?? {};
   try {
-    d || (o.body = C(o, d)), await O(g, o, e, r);
-    const n = await s(o, e, r);
-    return a ? n : f(n, 200);
+    c || (r.body = C(r, c)), await E(g, r, e, t);
+    const n = await s(r, e, t);
+    return y ? n : d(n, 200);
   } catch (n) {
-    return A.error(n), f(b(n), n.statusCode ?? 500);
+    return A.error(n), d(b(n), n.statusCode ?? 500);
   }
-}, O = async (s, t, o, e) => {
+}, E = async (s, o, r, e) => {
   try {
-    s && (Array.isArray(s) ? await Promise.all(s.map((r) => r(t, o, e))) : await s(t, o, e));
-  } catch (r) {
-    throw r.statusCode || (r.statusCode = 400), r;
+    s && (Array.isArray(s) ? await Promise.all(s.map((t) => t(o, r, e))) : await s(o, r, e));
+  } catch (t) {
+    throw t.statusCode || (t.statusCode = 400), t;
   }
 };
-let y = l;
+let l = f;
 const P = (s) => {
-  w(s), y = l;
-}, j = y;
+  w(s), l = f;
+}, j = l;
 export {
-  c as ApiError,
+  i as ApiError,
   P as configure,
   j as default
 };

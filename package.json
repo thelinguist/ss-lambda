@@ -13,7 +13,12 @@
     "repository": {
         "url": "git+https://github.com/thelinguist/ss-lambda.git"
     },
-    "keywords": ["lambda", "typescript", "aws"],
+    "keywords": [
+        "lambda",
+        "typescript",
+        "aws",
+        "api"
+    ],
     "type": "module",
     "main": "./dist/ss-lambda.umd.cjs",
     "module": "./dist/ss-lambda.js",

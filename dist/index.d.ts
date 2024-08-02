@@ -1,5 +1,5 @@
 import { ManagedLambda } from './types/ManagedLambda';
-import { WrapperValidator } from './types/LambdaWrapper';
+import { WrapperValidator, LambdaEventOverride } from './types/LambdaWrapper';
 import { ApiError } from './ApiError';
 
 /**
@@ -12,4 +12,4 @@ declare let ssLambda: ManagedLambda;
  */
 declare const configure: (newConfig: any) => void;
 export default ssLambda;
-export { configure, ManagedLambda, WrapperValidator, ApiError };
+export { configure, ManagedLambda, WrapperValidator, ApiError, LambdaEventOverride };
