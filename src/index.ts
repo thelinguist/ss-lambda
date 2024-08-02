@@ -3,6 +3,7 @@ import { setConfig } from "./config"
 import type { ManagedLambda } from "./types/ManagedLambda"
 import type { WrapperValidator, LambdaEventOverride } from "./types/LambdaWrapper"
 import { ApiError } from "./ApiError"
+import { redirectResponse } from "./lambda/response"
 
 /**
  * wraps lambda function allowing more fetch like experience (headers, body, return as json)
@@ -18,4 +19,4 @@ const configure = newConfig => {
     ssLambda = managedLambda
 }
 export default ssLambda
-export { configure, ManagedLambda, WrapperValidator, ApiError, LambdaEventOverride }
+export { configure, redirectResponse, ManagedLambda, WrapperValidator, ApiError, LambdaEventOverride }
